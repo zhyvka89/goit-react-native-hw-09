@@ -1,3 +1,5 @@
+import { useThemeContext } from "@/contexts/ThemeContext";
+import { getThemeColors } from "@/utilities/theme";
 import React from 'react';
 import { Button, FlatList, ImageSourcePropType, StyleSheet, View } from 'react-native';
 import GenerationCard from '../components/GenerationCard';
@@ -18,13 +20,16 @@ const generations: Generation[] = [
 ];
 
 export default function GenerationsList({navigation}: {navigation: any}) {
+    const { theme, toggleTheme } = useThemeContext();
+    const colors = getThemeColors(theme);
+  
   const handleAddGeneration = () => {
     // later: navigation.navigate('AddGeneration');
     alert('Add Generation Pressed!');
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <FlatList
         data={generations}
         keyExtractor={(item) => item.id}
@@ -32,7 +37,7 @@ export default function GenerationsList({navigation}: {navigation: any}) {
           <GenerationCard
             title={item.title}
             image={item.image}
-            onPress={() => navigation.navigate('Memebers List', { itemId: item.id, generationTitle: item.title })}
+            onPress={() => navigation.navigate('MembersList', { itemId: item.id, generationTitle: item.title })}
           />
         )}
         numColumns={2} 

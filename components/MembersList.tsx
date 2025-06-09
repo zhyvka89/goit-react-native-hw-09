@@ -1,5 +1,7 @@
 import { fetchUsers } from "@/api";
+import { useThemeContext } from "@/contexts/ThemeContext";
 import { RootStackParamList } from "@/navigation/NativeStackNavigator";
+import { getThemeColors } from "@/utilities/theme";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from "react";
 import {
@@ -19,6 +21,8 @@ export default function MembersList({
 }: Props) {
   const { generationTitle } = route.params;
   const [members, setMembers] = useState([]);
+  const { theme, toggleTheme } = useThemeContext();
+  const colors = getThemeColors(theme);
 
   useEffect(() => {
     fetchUsers()
@@ -27,8 +31,8 @@ export default function MembersList({
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{generationTitle} Members</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, {color: colors.text}]}>{generationTitle} Members</Text>
 
       <FlatList
         data={members}
@@ -45,7 +49,7 @@ export default function MembersList({
               source={require("../assets/images/avatar.jpg")}
               style={styles.avatar}
             />
-            <Text style={styles.name}>{item.name}</Text>
+            <Text style={[styles.name , {color: colors.text}]}>{item.name}</Text>
           </TouchableOpacity>
         )}
       />

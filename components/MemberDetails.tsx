@@ -1,5 +1,7 @@
 import { fetchUserDetails } from "@/api";
+import { useThemeContext } from "@/contexts/ThemeContext";
 import { RootStackParamList } from "@/navigation/NativeStackNavigator";
+import { getThemeColors } from "@/utilities/theme";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from "react";
 import {
@@ -21,6 +23,8 @@ type MemberDetailsType = {
 export default function MemberDetails({ route }: Props) {
   const { memberId } = route.params;
   const [memberDetails, setMemberDetails] = useState<MemberDetailsType>({});
+  const { theme, toggleTheme } = useThemeContext();
+  const colors = getThemeColors(theme);
 
   useEffect(() => {
     fetchUserDetails(memberId)
@@ -37,14 +41,14 @@ export default function MemberDetails({ route }: Props) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
         <Image
           source={require("../assets/images/avatar.jpg")}
           style={styles.avatar}
         />
-        <Text style={styles.name}>{memberDetails.name}</Text>
-        <Text style={styles.birthday}>Email: {memberDetails.email}</Text>
+        <Text style={[styles.name, {color: colors.text}]}>{memberDetails.name}</Text>
+        <Text style={[styles.birthday, {color: colors.text}]}>Email: {memberDetails.email}</Text>
       </View>
 
       <View>
@@ -68,6 +72,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     padding: 20,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     alignItems: "center",
