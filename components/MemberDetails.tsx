@@ -23,7 +23,7 @@ type MemberDetailsType = {
 export default function MemberDetails({ route }: Props) {
   const { memberId } = route.params;
   const [memberDetails, setMemberDetails] = useState<MemberDetailsType>({});
-  const { theme, toggleTheme } = useThemeContext();
+  const { theme } = useThemeContext();
   const colors = getThemeColors(theme);
 
   useEffect(() => {

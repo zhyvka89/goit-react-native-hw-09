@@ -20,7 +20,7 @@ const generations: Generation[] = [
 ];
 
 export default function GenerationsList({navigation}: {navigation: any}) {
-    const { theme, toggleTheme } = useThemeContext();
+    const { theme } = useThemeContext();
     const colors = getThemeColors(theme);
   
   const handleAddGeneration = () => {

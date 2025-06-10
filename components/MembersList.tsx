@@ -21,7 +21,7 @@ export default function MembersList({
 }: Props) {
   const { generationTitle } = route.params;
   const [members, setMembers] = useState([]);
-  const { theme, toggleTheme } = useThemeContext();
+  const { theme } = useThemeContext();
   const colors = getThemeColors(theme);
 
   useEffect(() => {
