@@ -1,15 +1,10 @@
-import { ThemeContext } from "@/contexts/ThemeContext";
+import { useThemeContext } from "@/contexts/ThemeContext";
 import { getThemeColors } from "@/utilities/theme";
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default function SettingsScreen() {
-  const themeContext = useContext(ThemeContext);
-  if (!themeContext) {
-    // You can handle the error as needed, here we throw for clarity
-    throw new Error("ThemeContext is undefined. Make sure your component is wrapped in ThemeProvider.");
-  }
-  const { theme, toggleTheme } = themeContext;
+const { theme, toggleTheme } = useThemeContext();
   const colors = getThemeColors(theme);
 
   return (

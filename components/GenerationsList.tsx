@@ -1,3 +1,4 @@
+import { useGeneration } from "@/contexts/GenerationContext";
 import { useThemeContext } from "@/contexts/ThemeContext";
 import { getThemeColors } from "@/utilities/theme";
 import React from 'react';
@@ -20,13 +21,20 @@ const generations: Generation[] = [
 ];
 
 export default function GenerationsList({navigation}: {navigation: any}) {
-    const { theme } = useThemeContext();
-    const colors = getThemeColors(theme);
+  const { theme } = useThemeContext();
+  const colors = getThemeColors(theme);
+  const { setGeneration } = useGeneration();
+  console.log(theme);
   
   const handleAddGeneration = () => {
     // later: navigation.navigate('AddGeneration');
     alert('Add Generation Pressed!');
   };
+
+  const handleGenerationPress = (generation: any) => {
+    setGeneration(generation);
+    navigation.navigate('MembersList');
+  }
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -37,7 +45,7 @@ export default function GenerationsList({navigation}: {navigation: any}) {
           <GenerationCard
             title={item.title}
             image={item.image}
-            onPress={() => navigation.navigate('MembersList', { itemId: item.id, generationTitle: item.title })}
+            onPress={() => handleGenerationPress(item)}
           />
         )}
         numColumns={2} 
@@ -55,7 +63,6 @@ export default function GenerationsList({navigation}: {navigation: any}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4',
   },
   list: { 
     paddingHorizontal: 16,

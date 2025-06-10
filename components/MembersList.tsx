@@ -1,4 +1,5 @@
 import { fetchUsers } from "@/api";
+import { useGeneration } from "@/contexts/GenerationContext";
 import { useThemeContext } from "@/contexts/ThemeContext";
 import { RootStackParamList } from "@/navigation/NativeStackNavigator";
 import { getThemeColors } from "@/utilities/theme";
@@ -16,13 +17,14 @@ import {
 type Props = NativeStackScreenProps<RootStackParamList, 'MembersList'>;
 
 export default function MembersList({
-  route,
   navigation,
 }: Props) {
-  const { generationTitle } = route.params;
   const [members, setMembers] = useState([]);
   const { theme } = useThemeContext();
   const colors = getThemeColors(theme);
+  const { generation } = useGeneration();
+
+  console.log(theme)
 
   useEffect(() => {
     fetchUsers()
@@ -32,7 +34,9 @@ export default function MembersList({
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, {color: colors.text}]}>{generationTitle} Members</Text>
+      <Text style={[styles.title, {color: colors.text}]}>
+        {generation ? `${generation.title} Members` : "Members"}
+      </Text>
 
       <FlatList
         data={members}
@@ -60,7 +64,6 @@ export default function MembersList({
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: "#fff",
   },
   title: {
     fontSize: 22,

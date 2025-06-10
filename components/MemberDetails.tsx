@@ -70,7 +70,6 @@ export default function MemberDetails({ route }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
     padding: 20,
     flex: 1,
     justifyContent: 'center',
